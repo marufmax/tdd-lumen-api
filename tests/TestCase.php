@@ -11,4 +11,35 @@ abstract class TestCase extends Laravel\Lumen\Testing\TestCase
     {
         return require __DIR__.'/../bootstrap/app.php';
     }
+
+    /**
+     * See if the response has the header
+     *
+     * @param  $header
+     * @return $this
+     */
+    public function seeHasHeader($header)
+    {
+        $this->assertTrue(
+            $this->response->headers->has($header),
+            "Respose should have the header '{$header}' but does not"
+        );
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the response header matches a given regular expression
+     *
+     * @param mixed $header
+     * @param mixed  $regexp
+     * @return $this
+     */
+    public function seeHeaderWithRegExp($header, $regexp)
+    {
+        $this->seeHasHeader($header)
+            ->assertRegExp($regexp, $this->response->headers->get($header));
+
+        return $this;
+    }
 }
