@@ -21,3 +21,5 @@ $router->get('/books/{id:[\d]+}', [
     'uses'  => 'BooksController@show'
     ]);
 $router->post('/books', 'BooksController@store');
+$router->put('/books/{id:[\d]+}', 'BooksController@update');
+$router->delete('/books/{id:[\d]+}', 'BooksController@destroy');

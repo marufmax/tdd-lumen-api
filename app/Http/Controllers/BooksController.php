@@ -53,4 +53,50 @@ class BooksController extends Controller
             'Location' => route('books.show', ['id' => $book->id])
         ]);
     }
+
+    /**
+     * PUT /books/{id}
+     *
+     * @param Request $request
+     * @param int $id
+     * @return mixed
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $book = Book::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => [
+                    'message' => 'Book not found'
+                ]
+                ], 404);
+        }
+
+        $book->fill($request->all());
+        $book->save();
+
+        return $book;
+    }
+
+    /**
+     * DELETE /books/{id}
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy($id)
+    {
+        try {
+            $book = Book::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => [
+                    'message' => 'Book not found'
+                ]
+            ], 404);
+        }
+        $book->delete();
+        return response(null, 204);
+    }
 }

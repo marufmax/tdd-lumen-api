@@ -7,6 +7,7 @@ use TestCase;
 
 class BooksControllerTest extends TestCase
 {
+    use DatabaseMigrations;
     /** @test */
     public function index_status_should_be_200()
     {
@@ -17,23 +18,32 @@ class BooksControllerTest extends TestCase
     /** @test */
     public function index_should_return_collection_of_records()
     {
-        $this->get('/books')
-            ->seeJson([
-                'title' => 'War of the Worlds'
+        $books = factory('App\Models\Book', 2)->create();
+
+        $this->get('/books');
+
+        foreach ($books as $book) {
+            $this->seeJson([
+                'title' => $book->title
             ])
-            ->seeJson([
-                'title' => 'A Wrinkle in Time'
-            ]);
+                ->seeJson([
+                    'title' => $book->title
+                ]);
+        }
     }
 
     /** @test */
     public function show_should_return_a_valied_book()
     {
-        $this->get('/books/1')
+        $book = factory('App\Models\Book')->create();
+
+        $this->get("/books/{$book->id}")
             ->seeStatusCode(200)
             ->seeJson([
-                'id'    => 1,
-                'author' => 'H. G. Wells'
+                'id'    => $book->id,
+                'title'    => $book->title,
+                'description'    => $book->description,
+                'author' => $book->author
             ]);
 
         $data = json_decode($this->response->getContent(), true);
@@ -88,5 +98,84 @@ class BooksControllerTest extends TestCase
 
         $this->seeStatusCode(201)
             ->seeHeaderWithRegExp('Location', '#/books/[\d]+$#');
+    }
+
+    /** @test */
+    public function update_should_only_change_fillable_fields()
+    {
+        $book = factory('App\Models\Book')->create([
+            'title' => 'War of the Worlds',
+            'description' => 'A science finction masterpice about Martain',
+            'author' => 'H. G. Wells'
+        ]);
+
+        $this->put("/books/{$book->id}", [
+            'id'            => 5,
+            'title'         => 'War of the Worlds',
+            'description'   => 'This books is way better than movie',
+            'author'        => 'H. G. Wells'
+        ]);
+
+        $this->seeStatusCode(200)
+            ->seeJson([
+                'id' => 1,
+                'title' => 'Waar of the Worlds',
+                'description' => 'This books is way better than movie',
+                'author' => 'H. G. Wells'
+            ]);
+
+        $this->seeInDatabase('books', [
+            'title' => 'War of the Worlds',
+        ]);
+    }
+
+    /** @test */
+    public function update_should_faild_invalid_id()
+    {
+        $this->put('/books/9999999')
+            ->seeStatusCode(404)
+            ->seeJsonEquals([
+                'error' => [
+                    'message' => 'Book not found'
+                ]
+            ]);
+    }
+
+    /** @test */
+    public function update_should_not_match_invailed_route()
+    {
+        $this->put('/books/this-is-invailed')
+            ->seeStatusCode(404);
+    }
+
+    /** @test */
+    public function destroy_should_remove_a_valid_book()
+    {
+        $book = factory('App\Models\Book')->create();
+
+        $this->delete("/books/{$book->id}")
+            ->seeStatusCode(204)
+            ->isEmpty();
+
+        $this->notSeeInDatabase('books', ['id' => $book->id]);
+    }
+
+    /** @test */
+    public function destroy_should_return_404_with_an_invalid_id()
+    {
+        $this->delete('/books/99999')
+            ->seeStatusCode(404)
+            ->seeJsonEquals([
+                'error' => [
+                    'message' => 'Book not found'
+                ]
+            ]);
+    }
+
+    /** @test */
+    public function destroy_should_not_match_an_invalid_id()
+    {
+        $this->delete('/books/this-is-an-invalid')
+            ->seeStatusCode(404);
     }
 }
