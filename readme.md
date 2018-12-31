@@ -1,9 +1,9 @@
-# TDD a book api with Lumen Micro Framework
+# TDD with a book api with Lumen Micro Framework
 
 [![Build Status](https://travis-ci.org/marufmax/tdd-lumen-api.svg)](https://travis-ci.org/marufmax/tdd-lumen-api)
 
 
-A simple CRUD books REST API  for learning TDD.
+A simple CRUD application with REST API for learning TDD.
 
 ## Endpoints
 
