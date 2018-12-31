@@ -7,8 +7,17 @@ php:
 
 sudo: false
 
+before_script:
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - php artisan key:generate
+  - php artisan migrate
+
 before_install:
   - phpenv config-rm xdebug.ini || true
+  - cp .env.travis .env
+  - mysql -e 'CREATE DATABASE bookapi_testing;'
 
 install: travis_retry composer install --no-interaction --prefer-source
 
