@@ -1,20 +1,21 @@
-# Lumen PHP Framework
+# TDD a book api with Lumen Micro Framework
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+[![Build Status](https://travis-ci.org/marufmax/tdd-lumen-api.svg)](https://travis-ci.org/marufmax/tdd-lumen-api)
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
 
-## Official Documentation
+A simple CRUD books REST API  for learning TDD.
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## Endpoints
 
-## Security Vulnerabilities
+| METHOD | URL        | DESCRIPTION                     |
+| ------ | ---------- | ------------------------------- |
+| GET    | /          | Getting the application version |
+| GET    | /books     | All books resources             |
+| GET    | /books/:id | Single book resouces            |
+| POST   | /books     | Create a new book resource      |
+| PUT    | /books/:id | Update a single book            |
+| DELETE | /books/:id | Delete a book                   |
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
 ## License
 
