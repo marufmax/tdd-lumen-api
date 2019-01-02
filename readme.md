@@ -1,6 +1,7 @@
 # TDD with a book api with Lumen Micro Framework
 
 [![Build Status](https://travis-ci.org/marufmax/tdd-lumen-api.svg)](https://travis-ci.org/marufmax/tdd-lumen-api)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmarufmax%2Ftdd-lumen-api.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmarufmax%2Ftdd-lumen-api?ref=badge_shield)
 
 
 A simple CRUD application with REST API for learning TDD.
@@ -20,3 +21,6 @@ A simple CRUD application with REST API for learning TDD.
 ## License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmarufmax%2Ftdd-lumen-api.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmarufmax%2Ftdd-lumen-api?ref=badge_large)
